@@ -1,6 +1,7 @@
 from os.path import join
 import pygame
 from random import randint, uniform
+import asyncio
 
 
 class Player(pygame.sprite.Sprite):
@@ -103,6 +104,7 @@ class AnimatedExplosion(pygame.sprite.Sprite):
         else:
             self.kill()
 
+
 def collisions():
     global running
     collision_sprites = pygame.sprite.spritecollide(player, meteor_sprites, True, pygame.sprite.collide_mask)
@@ -115,6 +117,7 @@ def collisions():
             laser.kill()
             for meteor in collided_sprites:  # Loop through all collided meteors
                 AnimatedExplosion(explosion_frames, meteor.rect.center, all_sprites)
+
 
 def display_score():
     current_time = pygame.time.get_ticks() // 100
@@ -160,25 +163,33 @@ player = Player(all_sprites)
 meteor_event = pygame.event.custom_type()
 pygame.time.set_timer(meteor_event, 500)
 
-while running:
-    dt = clock.tick() / 1000
-    # event loop
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == meteor_event:
-            x, y = randint(0, WINDOW_WIDTH), randint(-200, -100)
-            Meteor(meteor_surf, (x, y), (all_sprites, meteor_sprites))
 
-    # update
-    all_sprites.update(dt)
-    collisions()
+async def main():
+    global running
+    while running:
+        dt = clock.tick() / 1000
+        # event loop
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == meteor_event:
+                x, y = randint(0, WINDOW_WIDTH), randint(-200, -100)
+                Meteor(meteor_surf, (x, y), (all_sprites, meteor_sprites))
 
-    # draw the game
-    display_surface.fill('#3a2e3f')
-    display_score()
-    all_sprites.draw(display_surface)
+        # update
+        all_sprites.update(dt)
+        collisions()
 
-    pygame.display.update()
+        # draw the game
+        display_surface.fill('#3a2e3f')
+        display_score()
+        all_sprites.draw(display_surface)
 
-pygame.quit()
+        pygame.display.update()
+
+    pygame.quit()
+    await asyncio.sleep(0)
+
+
+if __name__ == '__main__':
+    asyncio.run(main())
