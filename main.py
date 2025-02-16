@@ -6,7 +6,7 @@ from random import randint, uniform
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
-        self.original_surf = pygame.image.load(join('..', 'images', 'player.png')).convert_alpha()
+        self.original_surf = pygame.image.load(join('', 'images', 'player.png')).convert_alpha()
         self.image = self.original_surf
         self.rect = self.image.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
         self.direction = pygame.Vector2()
@@ -133,16 +133,16 @@ running = True
 clock = pygame.time.Clock()
 
 # imports
-star_surf = pygame.image.load(join('..', 'images', 'star.png')).convert_alpha()
-meteor_surf = pygame.image.load(join('..', 'images', 'meteor.png')).convert_alpha()
-laser_surf = pygame.image.load(join('..', 'images', 'laser.png')).convert_alpha()
-font = pygame.font.Font(join('..', 'images', 'Oxanium-Bold.ttf'), 40)
-explosion_frames = [pygame.image.load(join('..', 'images', 'explosion', f'{i}.png')).convert_alpha() for i in range(21)]
+star_surf = pygame.image.load(join('', 'images', 'star.png')).convert_alpha()
+meteor_surf = pygame.image.load(join('', 'images', 'meteor.png')).convert_alpha()
+laser_surf = pygame.image.load(join('', 'images', 'laser.png')).convert_alpha()
+font = pygame.font.Font(join('', 'images', 'Oxanium-Bold.ttf'), 40)
+explosion_frames = [pygame.image.load(join('', 'images', 'explosion', f'{i}.png')).convert_alpha() for i in range(21)]
 
-laser_sound = pygame.mixer.Sound(join('..', 'audio', 'laser.wav'))
+laser_sound = pygame.mixer.Sound(join('', 'audio', 'laser.wav'))
 laser_sound.set_volume(0.5)
-explosion_sound = pygame.mixer.Sound(join('..', 'audio', 'explosion.wav'))
-game_music = pygame.mixer.Sound(join('..', 'audio', 'game_music.wav'))
+explosion_sound = pygame.mixer.Sound(join('', 'audio', 'explosion.wav'))
+game_music = pygame.mixer.Sound(join('', 'audio', 'game_music.wav'))
 game_music.set_volume(0.4)
 game_music.play(loops=-1)
 
